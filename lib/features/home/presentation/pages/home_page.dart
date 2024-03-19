@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:rick_and_morty/core/common/widgets/Button/custom_button.dart';
+import 'package:rick_and_morty/features/home/presentation/bloc/home_bloc.dart';
 
 import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
+import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/config/color/custom_color.dart';
-import '../../../../core/custom_assets/assets.gen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/character_card.dart';
 import '../widgets/location_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(CharacetersFetchAll());
+  }
   @override
   Widget build(BuildContext context) {
     return BackgroundContainer(
@@ -44,7 +58,7 @@ class HomePage extends StatelessWidget {
                         textColor: Color(0xFF191D29),
                         textSize: 13.sp,
                         title: "View all",
-                        onTap: (){
+                        onTap: () {
 
                         },
                       )
@@ -54,13 +68,29 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     width: 1.0.sw,
                     height: 137.h,
-                    child: ListView(
-                      scrollDirection:  Axis.horizontal,
-                      children: [
-                        CharacterCard(),
-                        CharacterCard(),
-                        CharacterCard(),
-                      ],
+                    child: BlocConsumer<HomeBloc, HomeState>(
+                      listener: (context, state) {
+                        if (state is CharactersFailure) {
+                          Logger().e(state.error);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is CharactersLoading) {
+                          return const Loader();
+                        }
+                        if(state is CharactersDisplaySuccess){
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.characters!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CharacterCard(width: 119.41.w,character: state.characters![index],);
+                            },
+                          );
+                        }else{
+                          return const Text("Some Things wrong");
+                        }
+
+                      },
                     ),
                   )
                 ],
@@ -92,7 +122,7 @@ class HomePage extends StatelessWidget {
                         textColor: Color(0xFF191D29),
                         textSize: 13.sp,
                         title: "View all",
-                        onTap: (){
+                        onTap: () {
 
                         },
                       )
@@ -102,13 +132,29 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     width: 1.0.sw,
                     height: 137.h,
-                    child: ListView(
-                      scrollDirection:  Axis.horizontal,
-                      children: [
-                        CharacterCard(),
-                        CharacterCard(),
-                        CharacterCard(),
-                      ],
+                    child: BlocConsumer<HomeBloc, HomeState>(
+                      listener: (context, state) {
+                        if (state is CharactersFailure) {
+                          Logger().e(state.error);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is CharactersLoading) {
+                          return const Loader();
+                        }
+                        if(state is CharactersDisplaySuccess){
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 5,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CharacterCard(width: 119.41.w,character: state.characters![index],);
+                            },
+                          );
+                        }else{
+                          return const Text("Some Things wrong");
+                        }
+
+                      },
                     ),
                   )
                 ],
@@ -141,7 +187,7 @@ class HomePage extends StatelessWidget {
                         textColor: Color(0xFF191D29),
                         textSize: 13.sp,
                         title: "View all",
-                        onTap: (){
+                        onTap: () {
 
                         },
                       )
@@ -152,7 +198,7 @@ class HomePage extends StatelessWidget {
                     width: 1.0.sw,
                     height: 46.h,
                     child: ListView(
-                      scrollDirection:  Axis.horizontal,
+                      scrollDirection: Axis.horizontal,
                       children: [
                         LocationCard(),
                         LocationCard(),
@@ -190,7 +236,7 @@ class HomePage extends StatelessWidget {
                         textColor: Color(0xFF191D29),
                         textSize: 13.sp,
                         title: "View all",
-                        onTap: (){
+                        onTap: () {
 
                         },
                       )
@@ -201,7 +247,7 @@ class HomePage extends StatelessWidget {
                     width: 1.0.sw,
                     height: 46.h,
                     child: ListView(
-                      scrollDirection:  Axis.horizontal,
+                      scrollDirection: Axis.horizontal,
                       children: [
                         LocationCard(),
                         LocationCard(),

@@ -17,7 +17,11 @@ dependencies:
   cupertino_icons: ^1.0.6
 
 
+  #functinal programming
   fpdart: ^1.1.0
+
+  #cached image
+  cached_network_image: ^3.3.1
 
   #state management
   flutter_bloc: ^8.1.4
@@ -47,6 +51,8 @@ dependencies:
   #make request to api
   http: ^1.2.1
 
+  logger: ^2.0.2+1
+
   #svg
   flutter_svg: ^2.0.10+1
 
@@ -55,7 +61,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  logger: ^2.0.2+1
+
   build_runner: ^2.4.6
   flutter_gen_runner:
   freezed: ^2.4.6

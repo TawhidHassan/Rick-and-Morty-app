@@ -11,19 +11,25 @@ class Routes {
   static const String mainPagePath = '/mainPage';
 
 
-  static const String homePage = 'home';
-  static const String homePagePath = '/home';
+  static const String HomePage = 'home';
+  static const String HomePagePath = '/home';
 
 
-  static const String CastPage = 'CastPage';
-  static const String CastPagePath = '/CastPage';
+  static const String CastPage = 'castPage';
+  static const String CastPagePath = '/castPage';
 
-  static const String CastDtailsPage = 'CastDtails';
-  static const String CastDtailsPagePath = 'CastDtailsPage';
+  static const String CastDtailsPage = 'castDtails';
+  static const String CastDtailsPagePath = 'castDtailsPage';
 
 
-  static const String ErrorPage = 'ErrorPage';
-  static const String ErrorPagePath = '/ErrorPage';
+  static const String EpisodePage = 'episodePage';
+  static const String EpisodePagePath = '/episodePage';
+
+  static const String LocationPage = 'locationPage';
+  static const String LocationPagePath = '/locationPage';
+
+  static const String ErrorPage = 'errorPage';
+  static const String ErrorPagePath = '/errorPage';
 
 
 

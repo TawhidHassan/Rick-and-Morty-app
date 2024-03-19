@@ -1,31 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:logger/logger.dart';
 
 import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
-import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
 import '../../../../core/routes/route_path.dart';
-import '../../../home/presentation/bloc/home_bloc.dart';
 import '../../../home/presentation/widgets/character_card.dart';
+import '../../../home/presentation/widgets/location_card.dart';
 
-class CastPage extends StatefulWidget {
-  const CastPage({super.key});
-
-  @override
-  State<CastPage> createState() => _CastPageState();
-}
-
-class _CastPageState extends State<CastPage> {
-  void initState() {
-    super.initState();
-    context.read<HomeBloc>().add(CharacetersFetchAll());
-  }
+class LocationPage extends StatelessWidget {
+  const LocationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +28,10 @@ class _CastPageState extends State<CastPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   ///Search Bar
                   Container(
                     width: 1.0.sw,
-                    padding: const EdgeInsets.only(
-                        top: 4, left: 4, right: 12, bottom: 4),
+                    padding: const EdgeInsets.only(top: 4, left: 4, right: 12, bottom: 4),
                     decoration: ShapeDecoration(
                       color: Colors.white.withOpacity(0.10000000149011612),
                       shape: RoundedRectangleBorder(
@@ -120,7 +106,7 @@ class _CastPageState extends State<CastPage> {
                   ///main section
                   SizedBox(height: 24.h),
                   Text(
-                    'All Cast',
+                    'All Locations',
                     style: TextStyle(
                       color: Color(0xFF13D9E5),
                       fontSize: 22,
@@ -128,40 +114,26 @@ class _CastPageState extends State<CastPage> {
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  BlocConsumer<HomeBloc, HomeState>(
-                    listener: (context, state) {
-                      if (state is CharactersFailure) {
-                        Logger().e(state.error);
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is CharactersLoading) {
-                        return const Loader();
-                      }
-                     if(state is CharactersDisplaySuccess){
-                       return GridView.builder(
-                         padding: EdgeInsets.all(0),
-                         physics: NeverScrollableScrollPhysics(),
-                         shrinkWrap: true,
-                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                           crossAxisCount: 2,
-                           crossAxisSpacing: 27.64.w,
-                           mainAxisSpacing: 24.0.h,
-                         ),
-                         itemCount: state.characters!.length,
-                         itemBuilder: (context, index) {
-                           return CharacterCard(character: state.characters![index],);
-                         },
-                       );
-                     }else{
-                       return const Text("Some Things wrong");
-                     }
-
+                  GridView.builder(
+                    padding: EdgeInsets.all(0),
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 28.0.w,
+                        mainAxisSpacing: 24.0.h,
+                        childAspectRatio: 6/8,
+                        mainAxisExtent: 45
+                    ),
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return LocationCard();
                     },
                   )
                 ],
               ),
             ),
+
 
 
           ],
@@ -170,3 +142,4 @@ class _CastPageState extends State<CastPage> {
     );
   }
 }
+

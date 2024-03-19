@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:rick_and_morty/core/routes/route_path.dart';
+import 'package:rick_and_morty/features/episode/presentation/pages/episode_page.dart';
+import 'package:rick_and_morty/features/location/presentation/pages/location_page.dart';
 
 import '../../features/cast/presentation/pages/cast_details_page.dart';
 import '../../features/cast/presentation/pages/cast_page.dart';
@@ -21,6 +23,8 @@ class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
   static final _shellNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'home');
   static final _shellNavigatorCastKey = GlobalKey<NavigatorState>(debugLabel: 'cast');
+  static final _shellNavigatorEpisodeKey = GlobalKey<NavigatorState>(debugLabel: 'episode');
+  static final _shellNavigatorLocationKey = GlobalKey<NavigatorState>(debugLabel: 'location');
 
 
   static final GoRouter routerx = GoRouter(
@@ -77,6 +81,34 @@ class AppRouter {
                   ),
 
                 ],
+              ),
+
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorEpisodeKey,
+            routes: [
+              // top route inside branch
+              GoRoute(
+                name: Routes.EpisodePage,
+                path: Routes.EpisodePagePath,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: EpisodePage(),
+                ),
+              ),
+
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorLocationKey,
+            routes: [
+              // top route inside branch
+              GoRoute(
+                name: Routes.LocationPage,
+                path: Routes.LocationPagePath,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: LocationPage(),
+                ),
               ),
 
             ],

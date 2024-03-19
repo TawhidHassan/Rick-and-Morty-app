@@ -58,6 +58,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cast.svg
   SvgGenImage get cast => const SvgGenImage('assets/icons/cast.svg');
 
+  /// File path: assets/icons/dwon.svg
+  SvgGenImage get dwon => const SvgGenImage('assets/icons/dwon.svg');
+
   /// File path: assets/icons/episode.svg
   SvgGenImage get episode => const SvgGenImage('assets/icons/episode.svg');
 
@@ -70,8 +73,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/location.svg
   SvgGenImage get location => const SvgGenImage('assets/icons/location.svg');
 
+  /// File path: assets/icons/search.svg
+  SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
+
   /// List of all assets
-  List<dynamic> get values => [cast, episode, home, loading, location];
+  List<dynamic> get values =>
+      [cast, dwon, episode, home, loading, location, search];
 }
 
 class $AssetsImagesGen {
