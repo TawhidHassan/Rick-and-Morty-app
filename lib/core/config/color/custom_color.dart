@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomColor {
-  static const Color primaryDarkColor = Color(0xFF0C56DB);
-  static const Color secondaryDarkColor = Color(0xFF0D102F);
-  static const Color primaryBGDarkColor = Color(0xFF0D102F);
-  static const Color primaryDarkScaffoldBackgroundColor = Color(0xFF0D102F);
+  static const Color primaryDarkColor = Color(0xFF191D29);
+  static const Color secondaryDarkColor = Color(0xFF191D29);
+  static const Color primaryBGDarkColor = Color(0xFF191D29);
+  static const Color primaryDarkScaffoldBackgroundColor = Color(0xFF191D29);
   static const Color primaryDarkTextColor = Color(0xFF2B2A29);
   static const Color secondaryDarkTextColor = Color(0xFF2B2A29);
 
@@ -15,6 +15,9 @@ class CustomColor {
   static const Color primaryLightTextColor = Color(0xFF263159);
   static const Color primaryTextColor = Color(0xFF2B2A29);
   static const Color secondaryLightTextColor = Color(0xFF1E9FF2);
+
+
+
 
   static const Color cardLightTextColor = Color(0xFFD9D9D9);
   static const Color cardTitleTextColor = Color(0xFFE6E4F1);
@@ -42,22 +45,21 @@ class CustomColor {
   static const black = Color(0xFF1F1F1F);
   static const textFieldBorder = Color(0xFF94A3B8);
 
-  static const Color kDarkBlue = Color(0xFF090943);
-  static const Color primaryColor = Color(0XFF2F2A51);
+  static const Color primaryColor = Color(0xFF191D29);
 
   static const MaterialColor kPrimaryColorx =  MaterialColor(
-    0xFF23203C,
+    0xFF9DFE00,
     <int, Color>{
-      50: Color(0xFF23203C),
-      100:  Color(0xFF23203C),
-      200:  Color(0xFF23203C),
-      300:  Color(0xFF23203C),
-      400:  Color(0xFF23203C),
-      500:  Color(0xFF23203C),
-      600:  Color(0xFF23203C),
-      700:  Color(0xFF23203C),
-      800:  Color(0xFF23203C),
-      900:   Color(0xFF23203C),
+      50: Color(0xFF9DFE00),
+      100:  Color(0xFF9DFE00),
+      200:  Color(0xFF9DFE00),
+      300:  Color(0xFF9DFE00),
+      400:  Color(0xFF9DFE00),
+      500:  Color(0xFF9DFE00),
+      600:  Color(0xFF9DFE00),
+      700:  Color(0xFF9DFE00),
+      800:  Color(0xFF9DFE00),
+      900:   Color(0xFF9DFE00),
     },
   );
 }

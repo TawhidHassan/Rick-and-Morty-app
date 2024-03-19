@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import '../color/custom_color.dart';
 
 class CustomTheme {
-  static const lightThemeFont = "DMSans", darkThemeFont = "DMSans";
+  static const lightThemeFont = "Plus Jakarta Sans", darkThemeFont = "Plus Jakarta Sans";
 
   // light theme
   static final lightTheme = ThemeData(
