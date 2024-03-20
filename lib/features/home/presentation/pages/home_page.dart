@@ -3,13 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:rick_and_morty/core/common/widgets/Button/custom_button.dart';
-import 'package:rick_and_morty/features/home/presentation/bloc/home_bloc.dart';
+import 'package:rick_and_morty/features/home/presentation/bloc/local/local_bloc.dart';
 
 import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/config/color/custom_color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/local_storage/database_manager.dart';
+import '../bloc/home/home_bloc.dart';
 import '../widgets/character_card.dart';
 import '../widgets/location_card.dart';
 
@@ -26,6 +29,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     context.read<HomeBloc>().add(CharacetersFetchAll());
+    context.read<LocalBloc>().add(CharacetersFetchHome());
+
   }
   @override
   Widget build(BuildContext context) {
@@ -68,22 +73,27 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: 1.0.sw,
                     height: 137.h,
-                    child: BlocConsumer<HomeBloc, HomeState>(
+                    child: BlocConsumer<LocalBloc, LocalState>(
                       listener: (context, state) {
-                        if (state is CharactersFailure) {
+                        if (state is CharactersLocalFailure) {
                           Logger().e(state.error);
                         }
                       },
                       builder: (context, state) {
-                        if (state is CharactersLoading) {
+                        if (state is CharactersLocalLoading) {
                           return const Loader();
+                        }if (state is CharactersLocalFailure) {
+                          return Text(state.error);
                         }
-                        if(state is CharactersDisplaySuccess){
-                          return ListView.builder(
+                        if(state is HomeLocalCharactersDisplaySuccess){
+                          return state.characters!.isEmpty?
+                          Assets.lottie.empty.lottie()
+                              :
+                          ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: state.characters!.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return CharacterCard(width: 119.41.w,character: state.characters![index],);
+                              return CharacterCard(width: 119.41.w,isLocal: true,characterLocal: state.characters![index],);
                             },
                           );
                         }else{

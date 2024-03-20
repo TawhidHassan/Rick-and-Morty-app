@@ -53,6 +53,9 @@ dependencies:
 
   logger: ^2.0.2+1
 
+  #Database
+  sqflite: ^2.3.2
+
   #svg
   flutter_svg: ^2.0.10+1
 

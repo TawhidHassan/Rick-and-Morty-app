@@ -6,23 +6,21 @@ Future<void> initDependencies() async {
   _initHome();
 
 
-  // Hive.defaultDirectory = (await getApplicationDocumentsDirectory()).path;
-  //
-  // serviceLocator.registerLazySingleton(() => supabase.client);
-  //
-  // serviceLocator.registerLazySingleton(
-  //   () => Hive.box(name: 'blogs'),
-  // );
-
   serviceLocator.registerFactory(() => InternetConnection());
 
-  // core
+  /// core
   serviceLocator.registerFactory<ConnectionChecker>(
     () => ConnectionCheckerImpl(
       serviceLocator(),
     ),
   );
 
+  ///db
+  serviceLocator.registerFactory<DBHelper>(
+    () => DBHelper(),
+  );
+
+  ///Api client
   serviceLocator.registerFactory<ApiMethod>(
     () => ApiMethod(),
   );
@@ -36,11 +34,18 @@ void _initHome() {
         serviceLocator(),
       ),
     )
+    ..registerFactory<HomeLocalDataSource>(
+          () => HomeLocalDataSourceImpl(
+           dbHelper:  serviceLocator(),
+      ),
+    )
   /// Repository
     ..registerFactory<HomeRepository>(
           () => HomeRepositoryImpl(
         serviceLocator(),
         serviceLocator(),
+        serviceLocator(),
+
       ),
     )
   /// Usecases
@@ -48,12 +53,44 @@ void _initHome() {
           () => GetAllCharacters(
         serviceLocator(),
       ),
+    ) ..registerFactory(
+          () => GetCharacterDetails(
+        serviceLocator(),
+      ),
+    )..registerFactory(
+          () => SaveLoacalCharacter(
+        serviceLocator(),
+      ),
+    )..registerFactory(
+          () => GetAllLocalCharacters(
+        serviceLocator(),
+      ),
+    )..registerFactory(
+          () => RemoveLoacalCharacter(
+        serviceLocator(),
+      ),
     )
   // Bloc
     ..registerLazySingleton(
           () => HomeBloc(
+            getAllCharacters: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+          () => CastBloc(
             getAllCharacters: serviceLocator()
       ),
+    ) ..registerLazySingleton(
+          () => CastDetailsBloc(
+            getCharacterDetails: serviceLocator(),
+
+      ),
+    )..registerLazySingleton(
+          () => LocalBloc(
+              getAllLocalCharacters: serviceLocator(),
+            saveLoacalCharacter: serviceLocator(),
+            removeLoacalCharacter: serviceLocator(),
+          ),
     );
 
 }

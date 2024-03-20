@@ -5,6 +5,7 @@ abstract class HomeState {}
 
 class HomeInitial extends HomeState {}
 
+
 final class CharactersLoading extends HomeState {}
 
 final class CharactersFailure extends HomeState {

@@ -6,7 +6,7 @@ import 'package:rick_and_morty/core/routes/route_path.dart';
 import 'package:rick_and_morty/features/episode/presentation/pages/episode_page.dart';
 import 'package:rick_and_morty/features/location/presentation/pages/location_page.dart';
 
-import '../../features/cast/presentation/pages/cast_details_page.dart';
+import '../../features/cast details/presentation/pages/cast_details_page.dart';
 import '../../features/cast/presentation/pages/cast_page.dart';
 import '../../features/error/presentation/error_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
@@ -77,7 +77,7 @@ class AppRouter {
                   GoRoute(
                   name: Routes.CastDtailsPage,
                   path: Routes.CastDtailsPagePath,
-                  builder: (context, state) =>CastDetailsPage()
+                  builder: (context, state) =>CastDetailsPage(id: state.extra as int,)
                   ),
 
                 ],

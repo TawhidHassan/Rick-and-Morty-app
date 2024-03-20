@@ -6,12 +6,26 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../repository/home_repository.dart';
 
-class GetAllCharacters implements UseCase<List<Character>, NoParams> {
+class GetAllCharacters implements UseCase<List<Character>, GetCharacterParams> {
   final HomeRepository homeRepository;
   GetAllCharacters(this.homeRepository);
 
   @override
-  Future<Either<Failure, List<Character>>> call(NoParams params) async {
-    return await homeRepository.getAllcharacters();
+  Future<Either<Failure, List<Character>>> call(GetCharacterParams params) async {
+    return await homeRepository.getAllcharacters(params.status,params.search,params.page);
   }
+}
+
+
+class GetCharacterParams {
+  final String? status;
+  final String? search;
+  final int? page;
+
+  GetCharacterParams({
+     this.status,
+     this.search,
+     this.page,
+
+  });
 }

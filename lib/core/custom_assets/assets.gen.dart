@@ -55,17 +55,35 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/android.svg
+  SvgGenImage get android => const SvgGenImage('assets/icons/android.svg');
+
+  /// File path: assets/icons/camera.svg
+  SvgGenImage get camera => const SvgGenImage('assets/icons/camera.svg');
+
   /// File path: assets/icons/cast.svg
   SvgGenImage get cast => const SvgGenImage('assets/icons/cast.svg');
 
   /// File path: assets/icons/dwon.svg
   SvgGenImage get dwon => const SvgGenImage('assets/icons/dwon.svg');
 
+  /// File path: assets/icons/earth.svg
+  SvgGenImage get earth => const SvgGenImage('assets/icons/earth.svg');
+
   /// File path: assets/icons/episode.svg
   SvgGenImage get episode => const SvgGenImage('assets/icons/episode.svg');
 
+  /// File path: assets/icons/gender.svg
+  SvgGenImage get gender => const SvgGenImage('assets/icons/gender.svg');
+
+  /// File path: assets/icons/heart.svg
+  SvgGenImage get heart => const SvgGenImage('assets/icons/heart.svg');
+
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
+
+  /// File path: assets/icons/list.svg
+  SvgGenImage get list => const SvgGenImage('assets/icons/list.svg');
 
   /// File path: assets/icons/loading.png
   AssetGenImage get loading => const AssetGenImage('assets/icons/loading.png');
@@ -76,9 +94,26 @@ class $AssetsIconsGen {
   /// File path: assets/icons/search.svg
   SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
 
+  /// File path: assets/icons/share.svg
+  SvgGenImage get share => const SvgGenImage('assets/icons/share.svg');
+
   /// List of all assets
-  List<dynamic> get values =>
-      [cast, dwon, episode, home, loading, location, search];
+  List<dynamic> get values => [
+        android,
+        camera,
+        cast,
+        dwon,
+        earth,
+        episode,
+        gender,
+        heart,
+        home,
+        list,
+        loading,
+        location,
+        search,
+        share
+      ];
 }
 
 class $AssetsImagesGen {

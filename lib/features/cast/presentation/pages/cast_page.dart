@@ -1,18 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
+import 'package:rick_and_morty/features/cast/presentation/bloc/cast_bloc.dart';
 
+import '../../../../core/common/entities/enums.dart';
 import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
-import '../../../../core/routes/route_path.dart';
-import '../../../home/presentation/bloc/home_bloc.dart';
+import '../../../home/domain/entities/character.dart';
 import '../../../home/presentation/widgets/character_card.dart';
+import '../widgets/search_bar.dart';
 
 class CastPage extends StatefulWidget {
   const CastPage({super.key});
@@ -22,100 +26,47 @@ class CastPage extends StatefulWidget {
 }
 
 class _CastPageState extends State<CastPage> {
+  final scrollController = ScrollController();
+
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(CharacetersFetchAll());
+    setupScrollController(context);
+    context.read<CastBloc>().add(CastFetchAll(status: '',search: ''));
+
   }
 
+  void setupScrollController(context) {
+    final CastBloc castBloc = BlocProvider.of<CastBloc>(context);
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          if(castBloc.state is CastDisplaySuccess){
+            final currentState = castBloc.state as CastDisplaySuccess;
+            BlocProvider.of<CastBloc>(context).add(CastFetchAll(search:currentState.search,status: currentState.status ));
+          }
+        }
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return BackgroundContainer(
-      chid: SingleChildScrollView(
-        child: Column(
-          children: [
-            CustomeAppBar(),
 
-            Padding(
+    return BackgroundContainer(
+      chid: Column(
+        children: [
+          CustomeAppBar(),
+
+          Expanded(
+            flex: 1,
+            child: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
                   ///Search Bar
-                  Container(
-                    width: 1.0.sw,
-                    padding: const EdgeInsets.only(
-                        top: 4, left: 4, right: 12, bottom: 4),
-                    decoration: ShapeDecoration(
-                      color: Colors.white.withOpacity(0.10000000149011612),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 0.40, color: Color(0xB284F729)),
-                        borderRadius: BorderRadius.circular(23.79),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(
-                            top: 12.h,
-                            left: 12.w,
-                            right: 8.w,
-                            bottom: 12.h,
-                          ),
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF13D8E5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(23.79),
-                                bottomLeft: Radius.circular(23.79),
-                              ),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 56.w,
-                                child: Text(
-                                  'Status',
-                                  style: TextStyle(
-                                    color: Color(0xFFF2F2F2),
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8.w),
-                              Assets.icons.dwon.svg()
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 24.w,),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Search',
-                                style: TextStyle(
-                                  color: Color(0xFF858585),
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Assets.icons.search.svg()
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  CustomeSearchBar(),
+                  // SearchBar(),
 
                   ///main section
                   SizedBox(height: 24.h),
@@ -128,44 +79,62 @@ class _CastPageState extends State<CastPage> {
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  BlocConsumer<HomeBloc, HomeState>(
+                  BlocConsumer<CastBloc, CastState>(
                     listener: (context, state) {
-                      if (state is CharactersFailure) {
+                      if (state is CastFailure) {
                         Logger().e(state.error);
                       }
                     },
                     builder: (context, state) {
-                      if (state is CharactersLoading) {
+                      if (state is CastLoading && state.isFirstFetch!) {
                         return const Loader();
                       }
-                     if(state is CharactersDisplaySuccess){
-                       return GridView.builder(
-                         padding: EdgeInsets.all(0),
-                         physics: NeverScrollableScrollPhysics(),
-                         shrinkWrap: true,
-                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                           crossAxisCount: 2,
-                           crossAxisSpacing: 27.64.w,
-                           mainAxisSpacing: 24.0.h,
+                      List<Character>?characters = [];
+                      bool isLoading = false;
+                      if (state is CastLoading) {
+                        characters = state.oldCharacters!;
+                        isLoading = true;
+                      } else if (state is CastDisplaySuccess) {
+                        characters = state.characters!;
+                      }
+                       return Expanded(
+                         child:characters.isEmpty?Text("There has no data")
+                             :
+                         GridView.builder(
+                           controller: scrollController,
+                           padding: EdgeInsets.all(0),
+                           // physics: NeverScrollableScrollPhysics(),
+                           shrinkWrap: true,
+                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                             crossAxisCount: 2,
+                             crossAxisSpacing: 27.64.w,
+                             mainAxisSpacing: 24.0.h,
+                           ),
+                           itemCount: characters.length + (isLoading ? 1 : 0),
+                           itemBuilder: (context, index) {
+                            if(index < characters!.length){
+                             return CharacterCard(character: characters[index],);}
+                            else{
+                              Timer(Duration(milliseconds: 30), () {
+                                scrollController
+                                    .jumpTo(scrollController.position.maxScrollExtent);
+                              });
+                              return Center(child: CircularProgressIndicator(),);
+                            }
+                           },
                          ),
-                         itemCount: state.characters!.length,
-                         itemBuilder: (context, index) {
-                           return CharacterCard(character: state.characters![index],);
-                         },
                        );
-                     }else{
-                       return const Text("Some Things wrong");
-                     }
+
 
                     },
                   )
                 ],
               ),
             ),
+          ),
 
 
-          ],
-        ),
+        ],
       ),
     );
   }
