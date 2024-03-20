@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:rick_and_morty/core/common/widgets/Button/custom_button.dart';
 import 'package:rick_and_morty/features/home/presentation/bloc/local/local_bloc.dart';
@@ -12,6 +13,7 @@ import '../../../../core/config/color/custom_color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
 import '../../../../core/local_storage/database_manager.dart';
+import '../../../../core/routes/route_path.dart';
 import '../bloc/home/home_bloc.dart';
 import '../widgets/character_card.dart';
 import '../widgets/location_card.dart';
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                         textSize: 13.sp,
                         title: "View all",
                         onTap: () {
-
+                          context.goNamed(Routes.CastPage,extra: true);
                         },
                       )
                     ],
@@ -91,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                               :
                           ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: state.characters!.length,
+                            itemCount: state.characters!.length>5?5:state.characters!.length,
                             itemBuilder: (BuildContext context, int index) {
                               return CharacterCard(width: 119.41.w,isLocal: true,characterLocal: state.characters![index],);
                             },
@@ -133,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                         textSize: 13.sp,
                         title: "View all",
                         onTap: () {
-
+                          context.goNamed(Routes.CastPage,extra: false);
                         },
                       )
                     ],

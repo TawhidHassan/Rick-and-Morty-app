@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
-import 'package:rick_and_morty/features/cast/presentation/bloc/cast_bloc.dart';
 
 import '../../../../core/common/entities/enums.dart';
 import '../../../../core/common/widgets/Background/background.dart';
@@ -15,11 +14,16 @@ import '../../../../core/common/widgets/appBar/customeAppBar.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
 import '../../../home/domain/entities/character.dart';
+import '../../../home/presentation/bloc/local/local_bloc.dart';
 import '../../../home/presentation/widgets/character_card.dart';
+import '../bloc/cast/cast_bloc.dart';
+import '../bloc/localCast/local_cast_bloc.dart';
+import '../widgets/favorite_search_bar.dart';
 import '../widgets/search_bar.dart';
 
 class CastPage extends StatefulWidget {
-  const CastPage({super.key});
+  final bool isFavouritePage;
+  const CastPage({super.key, this.isFavouritePage=false});
 
   @override
   State<CastPage> createState() => _CastPageState();
@@ -31,10 +35,8 @@ class _CastPageState extends State<CastPage> {
   void initState() {
     super.initState();
     setupScrollController(context);
-    context.read<CastBloc>().add(CastFetchAll(status: '',search: ''));
 
   }
-
   void setupScrollController(context) {
     final CastBloc castBloc = BlocProvider.of<CastBloc>(context);
     scrollController.addListener(() {
@@ -50,7 +52,11 @@ class _CastPageState extends State<CastPage> {
   }
   @override
   Widget build(BuildContext context) {
-
+    if(widget.isFavouritePage){
+      context.read<LocalCastBloc>().add(LocalCastFetch(search: '',status: ''));
+    }else{
+      context.read<CastBloc>().add(CastFetchAll(status: '',search: ''));
+    }
     return BackgroundContainer(
       chid: Column(
         children: [
@@ -65,13 +71,16 @@ class _CastPageState extends State<CastPage> {
                 children: [
 
                   ///Search Bar
+                  widget.isFavouritePage?
+                  CustomeFavouriteSearchBar()
+                  :
                   CustomeSearchBar(),
                   // SearchBar(),
 
                   ///main section
                   SizedBox(height: 24.h),
                   Text(
-                    'All Cast',
+                    widget.isFavouritePage?"Favourites":'All Cast',
                     style: TextStyle(
                       color: Color(0xFF13D9E5),
                       fontSize: 22,
@@ -79,6 +88,46 @@ class _CastPageState extends State<CastPage> {
                     ),
                   ),
                   SizedBox(height: 16.h),
+                  widget.isFavouritePage?
+                  BlocConsumer<LocalCastBloc, LocalCastState>(
+                    listener: (context, state) {
+                      if (state is LocalCastFailure) {
+                        Logger().e(state.error);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is LocalCastLoading) {
+                        return const Loader();
+                      }
+                      if(state is LocalCastDisplaySuccess){
+                        return Expanded(
+                          child: state.characters!.isEmpty?
+                          Assets.lottie.empty.lottie()
+                              :
+                          GridView.builder(
+                            padding: EdgeInsets.all(0),
+                            // physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 27.64.w,
+                              mainAxisSpacing: 24.0.h,
+                            ),
+                            itemCount: state.characters!.length,
+                            itemBuilder: (context, index) {
+                                return CharacterCard(isLocal: true,characterLocal:state.characters![index] );
+
+                            },
+                          ),
+                        );
+                      }return Text("Some things wrong");
+
+
+
+
+                    },
+                  )
+                      :
                   BlocConsumer<CastBloc, CastState>(
                     listener: (context, state) {
                       if (state is CastFailure) {

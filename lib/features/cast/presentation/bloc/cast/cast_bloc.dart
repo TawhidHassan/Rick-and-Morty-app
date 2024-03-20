@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
-import '../../../home/domain/entities/character.dart';
-import '../../../home/domain/usecase/get_all_characters.dart';
+import '../../../../home/domain/entities/character.dart';
+import '../../../../home/domain/usecase/get_all_characters.dart';
 
 part 'cast_event.dart';
 part 'cast_state.dart';
+
 
 class CastBloc extends Bloc<CastEvent, CastState> {
   final GetAllCharacters _getAllCharacters;
@@ -51,17 +51,18 @@ class CastBloc extends Bloc<CastEvent, CastState> {
     res.fold(
           (l) => emit(CastFailure(l.message)),
           (r){
-            page++;
-            if(state is CastLoading){
-              final characters = (state as CastLoading).oldCharacters;
-              characters?.addAll(r);
-              emit(CastDisplaySuccess(characters: characters, status: event.status,search:event.search ));
+        page++;
+        if(state is CastLoading){
+          final characters = (state as CastLoading).oldCharacters;
+          characters?.addAll(r);
+          emit(CastDisplaySuccess(characters: characters, status: event.status,search:event.search ));
 
-            }else{
-              emit(CastDisplaySuccess(characters: r, status: event.status,search:event.search ));
+        }else{
+          emit(CastDisplaySuccess(characters: r, status: event.status,search:event.search ));
 
-            }
-          },
+        }
+      },
     );
   }
 }
+

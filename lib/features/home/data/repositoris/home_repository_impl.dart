@@ -53,7 +53,7 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<Either<Failure, List<CharacterLocal>>> getLocalAllcharacters(String? status, search) async{
     try{
-      final characters = await homeLocalDataSource.loadCharacters();
+      final characters = await homeLocalDataSource.loadCharacters(search: search,status: status);
       return right(characters);
     }on ServerException catch (e){
       return left(Failure(e.message));

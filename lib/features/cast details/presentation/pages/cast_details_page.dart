@@ -16,6 +16,7 @@ import '../../../../core/common/widgets/appBar/customeAppBar.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
 import '../../../../core/local_storage/database_manager.dart';
+import '../../../cast/presentation/bloc/localCast/local_cast_bloc.dart';
 import '../../../home/presentation/bloc/local/local_bloc.dart';
 import '../widgets/propertis_card.dart';
 
@@ -115,6 +116,7 @@ class CastDetailsPage extends StatelessWidget {
                                       onTap: (){
                                         context.read<LocalBloc>().add(RemoveCharacter(id: id));
                                         context.read<LocalBloc>().add(CharacetersFetchHome());
+                                        context.read<LocalCastBloc>().add(LocalCastFetch());
                                       },
                                       child: Icon(Icons.favorite,color: CustomColor.kPrimaryColorx,));
                                 }
@@ -125,6 +127,7 @@ class CastDetailsPage extends StatelessWidget {
                                         final currentState = castDetailsBloc.state as CastDetailsDisplaySuccess;
                                         context.read<LocalBloc>().add(SaveCharacter(character: currentState.character!));
                                         context.read<LocalBloc>().add(CharacetersFetchHome());
+                                        context.read<LocalCastBloc>().add(LocalCastFetch());
                                       }
                                     },
                                     child: Icon(Icons.favorite_outline));

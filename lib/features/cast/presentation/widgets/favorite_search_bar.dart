@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/core/common/widgets/loader.dart';
+import 'package:rick_and_morty/features/cast/presentation/bloc/localCast/local_cast_bloc.dart';
 
 import '../../../../core/common/entities/enums.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
 import '../bloc/cast/cast_bloc.dart';
 
-class CustomeSearchBar extends StatelessWidget {
-  const CustomeSearchBar({super.key});
+class CustomeFavouriteSearchBar extends StatelessWidget {
+  const CustomeFavouriteSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class CustomeSearchBar extends StatelessWidget {
                       .map((e) =>
                       PopupMenuItem(
                         onTap: () {
-                          context.read<CastBloc>().add(CastFetchAll(status: e));
+                          context.read<LocalCastBloc>().add(LocalCastFetch(status: e,search: ''));
                         },
                         child: Text('$e', style: TextStyle(
                             color: Colors.white,
@@ -71,19 +72,19 @@ class CustomeSearchBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      BlocBuilder<CastBloc, CastState>(
+                      BlocBuilder<LocalCastBloc, LocalCastState>(
                         builder: (context, state) {
-                          if (state is CastLoading) {
+                          if (state is LocalCastLoading) {
                             return SizedBox(
                                 height: 14,
                                 width: 14,
                                 child: Loader());
                           }
-                          if (state is CastDisplaySuccess) {
+                          if (state is LocalCastDisplaySuccess) {
                             return SizedBox(
                               width: 56.w,
                               child: Text(
-                                state.status==''?"Status":state.status!,
+                                state.status==''?"Status":state.status??"",
                                 style: TextStyle(
                                   color: Color(0xFFF2F2F2),
                                   fontSize: 13.sp,
@@ -120,10 +121,8 @@ class CustomeSearchBar extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         onSubmitted: (value){
-                          if(state is CastDisplaySuccess){
-                            context.read<CastBloc>().add(
-                                CastFetchAll(status: state.status, search:value));
-                          }
+                          context.read<LocalCastBloc>().add(LocalCastFetch(status: '',search: value));
+
                           FocusScope.of(context).unfocus();
 
                         },
@@ -132,7 +131,7 @@ class CustomeSearchBar extends StatelessWidget {
 
                         },
                         decoration: InputDecoration(
-                          hintText: 'Search',
+                          hintText: 'Search Favourite',
                           hintStyle: TextStyle(
                             color: Color(0xFF858585),
                             fontSize: 15.sp,

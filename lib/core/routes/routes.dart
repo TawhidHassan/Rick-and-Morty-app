@@ -69,11 +69,10 @@ class AppRouter {
               GoRoute(
                 name: Routes.CastPage,
                 path: Routes.CastPagePath,
-                pageBuilder: (context, state) => const NoTransitionPage(
-                  child: CastPage(),
+                pageBuilder: (context, state) =>  NoTransitionPage(
+                  child: CastPage(isFavouritePage: state.extra==null?false:state.extra as bool,),
                 ),
                 routes:  [
-
                   GoRoute(
                   name: Routes.CastDtailsPage,
                   path: Routes.CastDtailsPagePath,

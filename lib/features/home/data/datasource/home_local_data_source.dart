@@ -9,7 +9,7 @@ import '../../../../core/error/exceptions.dart';
 abstract interface class HomeLocalDataSource {
   Future<CharacterLocal?> uploadLocalCharacters({required CharacterLocal characterLocal});
   Future<CharacterLocal?> removeLocalCharacters({required int id});
-  Future<List<CharacterLocal>> loadCharacters();
+  Future<List<CharacterLocal>> loadCharacters({String? status,String? search});
 }
 
 class HomeLocalDataSourceImpl implements HomeLocalDataSource {
@@ -17,15 +17,16 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
   HomeLocalDataSourceImpl({this.dbHelper});
 
   @override
-  Future<List<CharacterLocal>> loadCharacters()async {
+  Future<List<CharacterLocal>> loadCharacters(
+      {String? status, String? search})async {
     List<CharacterLocal> charatcters = [];
+    Logger().d("status: ${status}  search ${search}");
     try{
-      await dbHelper!.fetchAllProducts().then((value){
+      await dbHelper!.fetchAllProducts(status??"",search??"").then((value){
         if(value!=null&&value.isNotEmpty){
           charatcters=value;
         }else{
           charatcters=[];
-
         }
       });
       Logger().w(charatcters.length);
@@ -43,7 +44,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
             name: characterLocal.name??"",
             image:characterLocal.image??"",
             id: characterLocal.id,
-            status: characterLocal.status??""
+            status: characterLocal.status!.toLowerCase()
           )
       );
 

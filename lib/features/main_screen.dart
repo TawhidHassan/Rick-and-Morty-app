@@ -5,6 +5,7 @@ import 'package:rick_and_morty/core/config/color/custom_color.dart';
 
 import '../core/config/Strings/strings.dart';
 import '../core/custom_assets/assets.gen.dart';
+import '../core/routes/route_path.dart';
 
 
 
@@ -12,20 +13,24 @@ class MainScreen extends StatelessWidget {
   const MainScreen({super.key, required this.navigationShell});
   final StatefulNavigationShell navigationShell;
 
-  void _goBranch(int index) {
-    navigationShell.goBranch(
-      index,
-      // A common pattern when using bottom navigation bars is to support
-      // navigating to the initial location when tapping the item that is
-      // already active. This example demonstrates how to support this behavior,
-      // using the initialLocation parameter of goBranch.
-      initialLocation: index == navigationShell.currentIndex,
-    );
+  void _goBranch(int index,BuildContext context) {
+    if(index==1){
+      context.goNamed(Routes.CastPage,extra: false);
+    }else{
+      navigationShell.goBranch(
+        index,
+        // A common pattern when using bottom navigation bars is to support
+        // navigating to the initial location when tapping the item that is
+        // already active. This example demonstrates how to support this behavior,
+        // using the initialLocation parameter of goBranch.
+        initialLocation: index == navigationShell.currentIndex,
+      );
+    }
+
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: CustomColor.primaryDarkColor,
@@ -67,7 +72,7 @@ class MainScreen extends StatelessWidget {
         // destinations: const [
         //
         // ],
-        onTap: _goBranch,
+        onTap:(index)=> _goBranch(index,context),
         // onDestinationSelected: ,
 
       ),

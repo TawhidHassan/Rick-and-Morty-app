@@ -1,5 +1,6 @@
 part of 'cast_bloc.dart';
 
+
 @immutable
 abstract class CastEvent {}
 final class CastFetchAll extends CastEvent {

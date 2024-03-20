@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io' as io;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:rick_and_morty/features/home/data/models/characterLocal.dart';
 import 'package:rick_and_morty/features/home/domain/entities/character.dart';
@@ -37,12 +39,32 @@ class DBHelper{
 
 
 
-  Future<List<CharacterLocal>?> fetchAllProducts() async {
+  Future<List<CharacterLocal>?> fetchAllProducts(String? status,search) async {
     Database database = await db;
-    List<Map<String, dynamic>> maps = await database.query('CharacterLocal');
+    List<Map<String, dynamic>> maps;
+    if(status!=''){
+      maps= await database.query(
+        "CharacterLocal",
+        where: 'status = ?',
+        whereArgs: [status!.toLowerCase()],
+      );
+    }else if(search!=''){
+      maps= await database.query(
+        "CharacterLocal",
+        where: 'name LIKE ?',
+        whereArgs: ['%$search'],
+      );
+    }
+    else{
+      maps= await database.query('CharacterLocal');
+    }
+
     if (maps.isNotEmpty) {
       return maps.map((map) => CharacterLocal.fromDbMap(map)).toList();
     }
+
+
+
     return null;
   }
 

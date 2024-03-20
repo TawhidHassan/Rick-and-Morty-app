@@ -91,6 +91,12 @@ void _initHome() {
             saveLoacalCharacter: serviceLocator(),
             removeLoacalCharacter: serviceLocator(),
           ),
+    )..registerLazySingleton(
+          () => LocalCastBloc(
+              getAllLocalCharacters: serviceLocator(),
+            saveLoacalCharacter: serviceLocator(),
+            removeLoacalCharacter: serviceLocator(),
+          ),
     );
 
 }

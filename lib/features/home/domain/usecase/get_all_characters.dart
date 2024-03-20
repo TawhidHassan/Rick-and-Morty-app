@@ -1,5 +1,6 @@
 
 import 'package:fpdart/fpdart.dart';
+import 'package:logger/logger.dart';
 import 'package:rick_and_morty/features/home/domain/entities/character.dart';
 
 import '../../../../core/error/failures.dart';

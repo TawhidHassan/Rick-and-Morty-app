@@ -1,5 +1,6 @@
 
 import 'package:fpdart/fpdart.dart';
+import 'package:logger/logger.dart';
 import 'package:rick_and_morty/features/home/data/models/characterLocal.dart';
 import 'package:rick_and_morty/features/home/domain/entities/character.dart';
 
@@ -14,6 +15,7 @@ class GetAllLocalCharacters implements UseCase<List<CharacterLocal>, GetCharacte
 
   @override
   Future<Either<Failure, List<CharacterLocal>>> call(GetCharacterParams params) async {
+    Logger().i(params.status);
     return await homeRepository.getLocalAllcharacters(params.status,params.search);
   }
 }
