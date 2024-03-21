@@ -15,6 +15,7 @@ import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 import '../../../../core/routes/route_path.dart';
 import '../../../home/presentation/widgets/character_card.dart';
 import '../../../home/presentation/widgets/location_card.dart';
@@ -112,7 +113,7 @@ class _LocationPageState extends State<LocationPage> {
                                 ),
                               ),
                               SizedBox(width: 8.w),
-                              Assets.icons.dwon.svg()
+                              Assets.icons.dwon.svg(height: 20.sp)
                             ],
                           ),
                         ),
@@ -130,7 +131,7 @@ class _LocationPageState extends State<LocationPage> {
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              Assets.icons.search.svg()
+                              Assets.icons.search.svg(height: 20.sp)
                             ],
                           ),
                         ),
@@ -187,7 +188,7 @@ class _LocationPageState extends State<LocationPage> {
                                           crossAxisSpacing: 0.0.w,
                                           mainAxisSpacing: 24.0.h,
                                           childAspectRatio: 6/2,
-                                          mainAxisExtent: 45
+                                          mainAxisExtent:ResponsiveHelper.isTablet(context)? 65:45
                                       ),
                                       itemCount: locations.length + (isLoading ? 1 : 0),
                                       itemBuilder: (context, index) {

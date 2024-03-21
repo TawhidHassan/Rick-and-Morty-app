@@ -12,6 +12,7 @@ import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 import '../../domain/entities/episode.dart';
 
 class EpisodePage extends StatefulWidget {
@@ -107,7 +108,7 @@ class _EpisodePageState extends State<EpisodePage> {
                                 ),
                               ),
                               SizedBox(width: 8.w),
-                              Assets.icons.dwon.svg()
+                              Assets.icons.dwon.svg(height: 20.sp)
                             ],
                           ),
                         ),
@@ -125,7 +126,7 @@ class _EpisodePageState extends State<EpisodePage> {
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              Assets.icons.search.svg()
+                              Assets.icons.search.svg(height: 20.sp)
                             ],
                           ),
                         ),
@@ -182,7 +183,7 @@ class _EpisodePageState extends State<EpisodePage> {
                                           crossAxisSpacing: 0.0.w,
                                           mainAxisSpacing: 24.0.h,
                                           childAspectRatio: 6/2,
-                                          mainAxisExtent: 45
+                                          mainAxisExtent:ResponsiveHelper.isTablet(context)? 65:45
                                       ),
                                       itemCount: episodes.length + (isLoading ? 1 : 0),
                                       itemBuilder: (context, index) {

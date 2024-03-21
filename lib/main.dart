@@ -41,7 +41,15 @@ void main() async{
             create: (_) => serviceLocator<EpisodeBloc>(),
           ),
         ],
-        child: const MyApp(),
+          child: const MyApp(),
+        // child: DevicePreview(
+        //     enabled:true,
+        //   builder: (BuildContext context) {
+        //     return const MyApp();
+        //   },
+        //
+        // )
+
      )
   );
 }
@@ -54,9 +62,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(430, 932),
-      minTextAdapt: true,
-      useInheritedMediaQuery: true,
-      splitScreenMode: true,
+      // minTextAdapt: true,
+      // useInheritedMediaQuery: true,
+      // splitScreenMode: true,
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Store',

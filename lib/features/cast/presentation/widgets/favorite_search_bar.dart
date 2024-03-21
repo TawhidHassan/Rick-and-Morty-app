@@ -107,7 +107,7 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
                         },
                       ),
                       SizedBox(width: 8.w),
-                      Assets.icons.dwon.svg()
+                      Assets.icons.dwon.svg(height: 20.sp)
                     ],
                   ),
                 ),
@@ -147,7 +147,7 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Assets.icons.search.svg()
+                    Assets.icons.search.svg(height: 20.sp)
                   ],
                 ),
               ),

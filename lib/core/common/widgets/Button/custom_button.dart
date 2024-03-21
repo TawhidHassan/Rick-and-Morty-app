@@ -23,14 +23,14 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width:width??double.infinity,
+        width:width!.h,
         height:height!.h,
         decoration:boder!? BoxDecoration(
           border: Border.all(color: color!),
-          borderRadius: BorderRadius.circular(orderRadius??10),
+          borderRadius: BorderRadius.circular(orderRadius??10.r),
         ):BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(orderRadius??10),
+          borderRadius: BorderRadius.circular(orderRadius??10.r),
         ),
         child: Center(
           child: loading!?Loader():Text(title!,

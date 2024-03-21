@@ -4,6 +4,7 @@ import 'package:rick_and_morty/features/episode/domain/entities/episode.dart';
 import 'package:rick_and_morty/features/location/domain/entities/location.dart';
 
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 
 class LocationCard extends StatelessWidget {
   final int? index;
@@ -31,7 +32,7 @@ class LocationCard extends StatelessWidget {
             isLocation!?'#${index}':episode!.episode??"",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 10,
+              fontSize:ResponsiveHelper.isTablet(context)? 6.sp:10.sp,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -42,7 +43,7 @@ class LocationCard extends StatelessWidget {
             episode!.name!.length>15?episode!.name!.substring(0,8)+"..":episode!.name!,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 13,
+              fontSize:ResponsiveHelper.isTablet(context)? 6.sp:13.sp,
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
             ),

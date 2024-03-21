@@ -13,6 +13,7 @@ import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 import '../../../home/domain/entities/character.dart';
 import '../../../home/presentation/bloc/local/local_bloc.dart';
 import '../../../home/presentation/widgets/character_card.dart';
@@ -110,8 +111,9 @@ class _CastPageState extends State<CastPage> {
                             shrinkWrap: true,
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              crossAxisSpacing: 27.64.w,
-                              mainAxisSpacing: 24.0.h,
+                              crossAxisSpacing:ResponsiveHelper.isTablet(context)?10.0.w: 27.64.w,
+                              mainAxisSpacing:ResponsiveHelper.isTablet(context)?65.0.h: 24.0.h,
+                              childAspectRatio: 6/(ResponsiveHelper.isTablet(context)?3:6),
                             ),
                             itemCount: state.characters!.length,
                             itemBuilder: (context, index) {
@@ -156,8 +158,9 @@ class _CastPageState extends State<CastPage> {
                            shrinkWrap: true,
                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                              crossAxisCount: 2,
-                             crossAxisSpacing: 27.64.w,
-                             mainAxisSpacing: 24.0.h,
+                             crossAxisSpacing:ResponsiveHelper.isTablet(context)?10.0.w: 27.64.w,
+                             mainAxisSpacing:ResponsiveHelper.isTablet(context)?65.0.h: 24.0.h,
+                             childAspectRatio: 6/(ResponsiveHelper.isTablet(context)?3:6),
                            ),
                            itemCount: characters.length + (isLoading ? 1 : 0),
                            itemBuilder: (context, index) {

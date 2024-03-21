@@ -14,6 +14,7 @@ import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/config/color/custom_color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 import '../../../../core/routes/route_path.dart';
 import '../bloc/home/home_bloc.dart';
 import '../widgets/character_card.dart';
@@ -43,6 +44,8 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             CustomeAppBar(),
+
+            ///Favourites
             SizedBox(height: 40.h,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.0.w),
@@ -61,11 +64,11 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       CustomButton(
-                        width: 88,
-                        height: 26,
+                        width:ResponsiveHelper.isTablet(context)? 120:88,
+                        height:ResponsiveHelper.isTablet(context)? 32:26,
                         color: CustomColor.kPrimaryColorx,
                         textColor: Color(0xFF191D29),
-                        textSize: 13.sp,
+                        textSize: 13,
                         title: "View all",
                         onTap: () {
                           context.goNamed(Routes.CastPage,extra: true);
@@ -76,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 16.h,),
                   SizedBox(
                     width: 1.0.sw,
-                    height: 137.h,
+                    height:ResponsiveHelper.isTablet(context)?300.h: 137.h,
                     child: BlocConsumer<LocalBloc, LocalState>(
                       listener: (context, state) {
                         if (state is CharactersLocalFailure) {
@@ -130,11 +133,11 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       CustomButton(
-                        width: 88,
-                        height: 26,
+                        width:ResponsiveHelper.isTablet(context)? 120:88,
+                        height:ResponsiveHelper.isTablet(context)? 32:26,
                         color: CustomColor.kPrimaryColorx,
                         textColor: Color(0xFF191D29),
-                        textSize: 13.sp,
+                        textSize: 13,
                         title: "View all",
                         onTap: () {
                           context.goNamed(Routes.CastPage,extra: false);
@@ -145,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 16.h,),
                   SizedBox(
                     width: 1.0.sw,
-                    height: 137.h,
+                    height:ResponsiveHelper.isTablet(context)?300.h: 137.h,
                     child: BlocConsumer<HomeBloc, HomeState>(
                       listener: (context, state) {
                         if (state is CharactersFailure) {
@@ -195,11 +198,11 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       CustomButton(
-                        width: 88,
-                        height: 26,
+                        width:ResponsiveHelper.isTablet(context)? 120:88,
+                        height:ResponsiveHelper.isTablet(context)? 32:26,
                         color: CustomColor.kPrimaryColorx,
                         textColor: Color(0xFF191D29),
-                        textSize: 13.sp,
+                        textSize: 13,
                         title: "View all",
                         onTap: () {
                           context.goNamed(Routes.LocationPage);
@@ -210,7 +213,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 16.h,),
                   SizedBox(
                     width: 1.0.sw,
-                    height: 46.h,
+                    height:ResponsiveHelper.isTablet(context)?75.h: 46.h,
                     child: BlocConsumer<LocationBloc, LocationState>(
                       listener: (context, state) {
                         // TODO: implement listener
@@ -260,11 +263,11 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       CustomButton(
-                        width: 88,
-                        height: 26,
+                        width:ResponsiveHelper.isTablet(context)? 120:88,
+                        height:ResponsiveHelper.isTablet(context)? 32:26,
                         color: CustomColor.kPrimaryColorx,
                         textColor: Color(0xFF191D29),
-                        textSize: 13.sp,
+                        textSize: 13,
                         title: "View all",
                         onTap: () {
                           context.goNamed(Routes.EpisodePage);
@@ -275,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 16.h,),
                   SizedBox(
                     width: 1.0.sw,
-                    height: 46.h,
+                    height:ResponsiveHelper.isTablet(context)?75.h: 46.h,
                     child: BlocConsumer<EpisodeBloc, EpisodeState>(
                       listener: (context, state) {
                         // TODO: implement listener

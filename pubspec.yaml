@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.6
 
 
+
   #functinal programming
   fpdart: ^1.1.0
 
@@ -30,7 +31,7 @@ dependencies:
   get_it: ^7.6.7
 
   #date time
-  intl: ^0.19.0
+  intl: ^0.18.1
 
   #internet connection checker
   internet_connection_checker_plus: ^2.2.0
@@ -55,6 +56,9 @@ dependencies:
 
   #Database
   sqflite: ^2.3.2
+
+  #Path
+  path_provider: ^2.1.2
 
   #svg
   flutter_svg: ^2.0.10+1
