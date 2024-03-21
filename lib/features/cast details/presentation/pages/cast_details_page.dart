@@ -15,6 +15,7 @@ import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 import '../../../../core/local_storage/database_manager.dart';
 import '../../../cast/presentation/bloc/localCast/local_cast_bloc.dart';
 import '../../../home/presentation/bloc/local/local_bloc.dart';
@@ -55,14 +56,14 @@ class CastDetailsPage extends StatelessWidget {
                           state.character!.name??"",
                           style: TextStyle(
                             color: Color(0xFF13D9E5),
-                            fontSize: 22,
+                            fontSize:ResponsiveHelper.isTablet(context)?12.sp: 22.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         SizedBox(height: 20.h,),
                         Container(
-                          width: 240.w,
-                          height: 240.h,
+                          width: 240,
+                          height: 240,
                           padding: const EdgeInsets.all(30),
                           decoration: ShapeDecoration(
                             color: Colors.white.withOpacity(0.05000000074505806),
@@ -81,13 +82,13 @@ class CastDetailsPage extends StatelessWidget {
                                 placeholder: (context, url) => Loader(),
                                 errorWidget: (context, url, error){
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                    padding: EdgeInsets.symmetric(vertical: 10.0.h),
                                     child: Assets.images.logo.svg(),
                                   );
                                 },
                                 imageBuilder: (context, image) =>  Container(
-                                  width: 180.w,
-                                  height: 180.h,
+                                  width: 176,
+                                  height: 180,
                                   decoration: ShapeDecoration(
                                     image: DecorationImage(
                                       image: image,
@@ -104,38 +105,34 @@ class CastDetailsPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 16.h,),
-                        InkWell(
-                          onTap: (){
+                        BlocBuilder<LocalBloc, LocalState>(
+                        builder: (context, state) {
+                          if(state is HomeLocalCharactersDisplaySuccess){
+                            if(state.characters!.where((element) => element.id==id!).toList().isNotEmpty){
+                              return InkWell(
+                                  onTap: (){
+                                    context.read<LocalBloc>().add(RemoveCharacter(id: id));
+                                    context.read<LocalBloc>().add(CharacetersFetchHome());
+                                    context.read<LocalCastBloc>().add(LocalCastFetch());
+                                  },
+                                  child: Icon(Icons.favorite,color: CustomColor.kPrimaryColorx,));
+                            }
+                            return  InkWell(
+                                onTap: (){
+                                  final CastDetailsBloc castDetailsBloc = BlocProvider.of<CastDetailsBloc>(context);
+                                  if(castDetailsBloc.state is CastDetailsDisplaySuccess){
+                                    final currentState = castDetailsBloc.state as CastDetailsDisplaySuccess;
+                                    context.read<LocalBloc>().add(SaveCharacter(character: currentState.character!));
+                                    context.read<LocalBloc>().add(CharacetersFetchHome());
+                                    context.read<LocalCastBloc>().add(LocalCastFetch());
+                                  }
+                                },
+                                child: Icon(Icons.favorite_outline));
+                          }
+                          return SizedBox();
 
-                            },
-                            child: BlocBuilder<LocalBloc, LocalState>(
-                            builder: (context, state) {
-                              if(state is HomeLocalCharactersDisplaySuccess){
-                                if(state.characters!.where((element) => element.id==id!).toList().isNotEmpty){
-                                  return InkWell(
-                                      onTap: (){
-                                        context.read<LocalBloc>().add(RemoveCharacter(id: id));
-                                        context.read<LocalBloc>().add(CharacetersFetchHome());
-                                        context.read<LocalCastBloc>().add(LocalCastFetch());
-                                      },
-                                      child: Icon(Icons.favorite,color: CustomColor.kPrimaryColorx,));
-                                }
-                                return  InkWell(
-                                    onTap: (){
-                                      final CastDetailsBloc castDetailsBloc = BlocProvider.of<CastDetailsBloc>(context);
-                                      if(castDetailsBloc.state is CastDetailsDisplaySuccess){
-                                        final currentState = castDetailsBloc.state as CastDetailsDisplaySuccess;
-                                        context.read<LocalBloc>().add(SaveCharacter(character: currentState.character!));
-                                        context.read<LocalBloc>().add(CharacetersFetchHome());
-                                        context.read<LocalCastBloc>().add(LocalCastFetch());
-                                      }
-                                    },
-                                    child: Icon(Icons.favorite_outline));
-                              }
-                              return SizedBox();
-
-                            },
-                          )),
+                        },
+                                                  ),
                         SizedBox(height: 16.h,),
 
                         Row(

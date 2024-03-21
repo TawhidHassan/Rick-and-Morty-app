@@ -126,10 +126,9 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
                           FocusScope.of(context).unfocus();
 
                         },
-                        onChanged: (value) {
-
-
-                        },
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Search Favourite',
                           hintStyle: TextStyle(

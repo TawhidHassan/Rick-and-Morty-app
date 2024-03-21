@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 
 class Propertiescard extends StatelessWidget {
   final double? width;
@@ -21,8 +22,8 @@ class Propertiescard extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      margin: EdgeInsets.symmetric(horizontal: 8.0.w),
-      padding: EdgeInsets.symmetric(horizontal: 15.56.w,vertical: 8.09.h),
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      padding: EdgeInsets.symmetric(horizontal:ResponsiveHelper.isTablet(context)?15.56: 15.56.w,vertical: 8.09.h),
       decoration: ShapeDecoration(
         color: Colors.white.withOpacity(0.05000000074505806),
         shape: RoundedRectangleBorder(

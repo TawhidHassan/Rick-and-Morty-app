@@ -119,6 +119,7 @@ class CustomeSearchBar extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextField(
+
                         onSubmitted: (value){
                           if(state is CastDisplaySuccess){
                             context.read<CastBloc>().add(
@@ -127,10 +128,10 @@ class CustomeSearchBar extends StatelessWidget {
                           FocusScope.of(context).unfocus();
 
                         },
-                        onChanged: (value) {
 
-
-                        },
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Search',
                           hintStyle: TextStyle(
