@@ -129,7 +129,7 @@ class CastDetailsPage extends StatelessWidget {
                                 },
                                 child: Icon(Icons.favorite_outline));
                           }
-                          return SizedBox();
+                          return Icon(Icons.favorite_outline);
 
                         },
                                                   ),

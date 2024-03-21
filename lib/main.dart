@@ -42,13 +42,6 @@ void main() async{
           ),
         ],
           child: const MyApp(),
-        // child: DevicePreview(
-        //     enabled:true,
-        //   builder: (BuildContext context) {
-        //     return const MyApp();
-        //   },
-        //
-        // )
 
      )
   );
@@ -67,7 +60,7 @@ class MyApp extends StatelessWidget {
       // splitScreenMode: true,
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        title: 'Store',
+        title: 'Rick And Morty',
         theme: CustomTheme.lightTheme,
         darkTheme:CustomTheme.darkTheme, // standard dark theme
         themeMode: ThemeMode.dark,

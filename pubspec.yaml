@@ -74,7 +74,13 @@ dev_dependencies:
   freezed: ^2.4.6
   freezed_annotation: ^2.4.1
   json_serializable: ^6.7.1
-
+  flutter_launcher_icons: ^0.13.1
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  min_sdk_android: 21
+  image_path: "assets/images/splash.png"
+  adaptive_icon_background: "assets/images/splash.png"
 flutter_gen:
   output: lib/core/custom_assets/ # Optional (default: lib/gen/)
   line_length: 80 # Optional (default: 80)
