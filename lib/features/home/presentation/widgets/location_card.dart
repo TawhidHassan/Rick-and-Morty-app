@@ -16,7 +16,7 @@ class LocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 177.w,
+      width:ResponsiveHelper.isTablet(context)?100.w: 170.w,
       margin: EdgeInsets.only(right: 24.w),
       padding:  EdgeInsets.symmetric(horizontal: 11.92.w,vertical: 4.92.h),
       decoration: BoxDecoration(

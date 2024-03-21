@@ -26,7 +26,7 @@ class CharacterCard extends StatelessWidget {
         context.pushNamed(Routes.CastDtailsPage,extra:isLocal!? characterLocal!.id!: character!.id!);
       },
       child: Container(
-        width:ResponsiveHelper.isTablet(context)? 500:null,
+        width:ResponsiveHelper.isTablet(context)? 260:null,
         margin: EdgeInsets.only(right: 14.81.w),
         padding:EdgeInsets.symmetric(horizontal:ResponsiveHelper.isTablet(context)? 12.41:7.41,vertical: 7.41),
         decoration: BoxDecoration(
@@ -49,9 +49,9 @@ class CharacterCard extends StatelessWidget {
                   );
                 },
                 imageBuilder: (context, image) =>  Container(
-                  height:ResponsiveHelper.isTablet(context)?200.h:99.97.h,
                   margin: EdgeInsets.only(top:width==null?7.41.h:0,bottom:width==null? 9.h:0 ),
                   width:ResponsiveHelper.isTablet(context)?500.w:width??null,
+                  height:ResponsiveHelper.isTablet(context)?200.h:99.97.h,
                   decoration:  ShapeDecoration(
                       image: DecorationImage(
                           image: image,
@@ -72,7 +72,7 @@ class CharacterCard extends StatelessWidget {
               character!.name??'Name not found',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 10.sp,
+                fontSize:ResponsiveHelper.isTablet(context)?6.sp: 10.sp,
                 fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.start,

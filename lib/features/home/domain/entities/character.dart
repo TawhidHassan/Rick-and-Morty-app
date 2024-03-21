@@ -15,7 +15,7 @@ class Character {
   final String? url;
   final DateTime? created;
 
-//<editor-fold desc="Data Methods">
+
 
 
   const Character({

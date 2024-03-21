@@ -60,13 +60,14 @@ class _LocationPageState extends State<LocationPage> {
           Expanded(
             flex: 1,
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.only(left: 24.0,right: 24,top: 24,bottom: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ///Search Bar
                   Container(
                     width: 1.0.sw,
+                    height:ResponsiveHelper.isTablet(context)?70.h : 50.h,
                     padding: const EdgeInsets.only(top: 4, left: 4, right: 12, bottom: 4),
                     decoration: ShapeDecoration(
                       color: Colors.white.withOpacity(0.10000000149011612),
@@ -107,7 +108,7 @@ class _LocationPageState extends State<LocationPage> {
                                   'Status',
                                   style: TextStyle(
                                     color: Color(0xFFF2F2F2),
-                                    fontSize: 13.sp,
+                                    fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -127,11 +128,11 @@ class _LocationPageState extends State<LocationPage> {
                                 'Search',
                                 style: TextStyle(
                                   color: Color(0xFF858585),
-                                  fontSize: 15.sp,
+                                  fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              Assets.icons.search.svg(height: 20.sp)
+                              Assets.icons.search.svg(height:ResponsiveHelper.isTablet(context)?8.sp: 20.sp)
                             ],
                           ),
                         ),
@@ -143,7 +144,7 @@ class _LocationPageState extends State<LocationPage> {
                   Expanded(
                       flex: 1,
                       child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          padding: const EdgeInsets.only(top: 20.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -184,7 +185,7 @@ class _LocationPageState extends State<LocationPage> {
                                       // physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
+                                          crossAxisCount: ResponsiveHelper.isTablet(context)?3:2,
                                           crossAxisSpacing: 0.0.w,
                                           mainAxisSpacing: 24.0.h,
                                           childAspectRatio: 6/2,

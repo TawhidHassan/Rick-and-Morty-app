@@ -10,13 +10,13 @@ class CustomButton extends StatelessWidget {
   final Color? color;
   final double? height;
   final double? width;
-  final double? orderRadius;
+  final double? borderRadius;
   final bool? boder;
   final bool? loading;
   final Color? textColor;
   final double? textSize;
   final VoidCallback? onTap;
-        CustomButton({ this.title, this.color, this.textColor, this.onTap,Key? key, this.boder=false, this.height=48, this.width, this.orderRadius, this.textSize, this.loading=false}) : super(key: key);
+        CustomButton({ this.title, this.color, this.textColor, this.onTap,Key? key, this.boder=false, this.height=48, this.width, this.borderRadius, this.textSize, this.loading=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,10 @@ class CustomButton extends StatelessWidget {
         height:height!.h,
         decoration:boder!? BoxDecoration(
           border: Border.all(color: color!),
-          borderRadius: BorderRadius.circular(orderRadius??10.r),
+          borderRadius: BorderRadius.circular(borderRadius??10.r),
         ):BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(orderRadius??10.r),
+          borderRadius: BorderRadius.circular(borderRadius??10.r),
         ),
         child: Center(
           child: loading!?Loader():Text(title!,

@@ -6,6 +6,7 @@ import 'package:rick_and_morty/core/common/widgets/loader.dart';
 
 import '../../../../core/common/entities/enums.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 import '../bloc/cast/cast_bloc.dart';
 
 class CustomeSearchBar extends StatelessWidget {
@@ -15,13 +16,14 @@ class CustomeSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 1.0.sw,
+      height:ResponsiveHelper.isTablet(context)?70.h : 50.h,
       padding: const EdgeInsets.only(
           top: 4, left: 4, right: 12, bottom: 4),
       decoration: ShapeDecoration(
         color: Colors.white.withOpacity(0.10000000149011612),
         shape: RoundedRectangleBorder(
           side: BorderSide(width: 0.40, color: Color(0xB284F729)),
-          borderRadius: BorderRadius.circular(23.79),
+          borderRadius: BorderRadius.circular(23.79.r),
         ),
       ),
       child: BlocBuilder<CastBloc, CastState>(
@@ -40,7 +42,9 @@ class CustomeSearchBar extends StatelessWidget {
                       .map((e) =>
                       PopupMenuItem(
                         onTap: () {
-                          context.read<CastBloc>().add(CastFetchAll(status: e));
+                          if(state is CastDisplaySuccess){
+                            context.read<CastBloc>().add(CastFetchAll(status: e,search: state.search));
+                          }
                         },
                         child: Text('$e', style: TextStyle(
                             color: Colors.white,
@@ -61,8 +65,8 @@ class CustomeSearchBar extends StatelessWidget {
                     color: Color(0xFF13D8E5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(23.79),
-                        bottomLeft: Radius.circular(23.79),
+                        topLeft: Radius.circular(23.79.r),
+                        bottomLeft: Radius.circular(23.79.r),
                       ),
                     ),
                   ),
@@ -86,7 +90,7 @@ class CustomeSearchBar extends StatelessWidget {
                                 state.status==''?"Status":state.status!,
                                 style: TextStyle(
                                   color: Color(0xFFF2F2F2),
-                                  fontSize: 13.sp,
+                                  fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -98,7 +102,7 @@ class CustomeSearchBar extends StatelessWidget {
                               'Status',
                               style: TextStyle(
                                 color: Color(0xFFF2F2F2),
-                                fontSize: 13.sp,
+                                fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -130,13 +134,13 @@ class CustomeSearchBar extends StatelessWidget {
                         },
 
                         style: TextStyle(
-                          fontSize: 15.sp,
+                          fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                         ),
                         decoration: InputDecoration(
                           hintText: 'Search',
                           hintStyle: TextStyle(
                             color: Color(0xFF858585),
-                            fontSize: 15.sp,
+                            fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                             fontWeight: FontWeight.w400,
                           ),
                           contentPadding:
@@ -149,7 +153,7 @@ class CustomeSearchBar extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Assets.icons.search.svg(height: 20.sp)
+                    Assets.icons.search.svg(height:ResponsiveHelper.isTablet(context)?8.sp: 20.sp)
                   ],
                 ),
               ),

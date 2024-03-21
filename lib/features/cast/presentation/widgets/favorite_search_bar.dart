@@ -7,6 +7,7 @@ import 'package:rick_and_morty/features/cast/presentation/bloc/localCast/local_c
 
 import '../../../../core/common/entities/enums.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../../../core/extentions/ResponsiveHelper.dart';
 import '../bloc/cast/cast_bloc.dart';
 
 class CustomeFavouriteSearchBar extends StatelessWidget {
@@ -16,6 +17,7 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 1.0.sw,
+      height:ResponsiveHelper.isTablet(context)?70.h : 50.h,
       padding: const EdgeInsets.only(
           top: 4, left: 4, right: 12, bottom: 4),
       decoration: ShapeDecoration(
@@ -87,7 +89,7 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
                                 state.status==''?"Status":state.status??"",
                                 style: TextStyle(
                                   color: Color(0xFFF2F2F2),
-                                  fontSize: 13.sp,
+                                  fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -99,7 +101,7 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
                               'Status',
                               style: TextStyle(
                                 color: Color(0xFFF2F2F2),
-                                fontSize: 13.sp,
+                                fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -127,13 +129,13 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
 
                         },
                         style: TextStyle(
-                          fontSize: 15.sp,
+                          fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                         ),
                         decoration: InputDecoration(
                           hintText: 'Search Favourite',
                           hintStyle: TextStyle(
                             color: Color(0xFF858585),
-                            fontSize: 15.sp,
+                            fontSize:ResponsiveHelper.isTablet(context)?6.sp: 13.sp,
                             fontWeight: FontWeight.w400,
                           ),
                           contentPadding:
@@ -146,7 +148,7 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Assets.icons.search.svg(height: 20.sp)
+                    Assets.icons.search.svg(height:ResponsiveHelper.isTablet(context)?8.sp: 20.sp)
                   ],
                 ),
               ),
