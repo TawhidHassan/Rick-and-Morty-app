@@ -1,24 +1,59 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rick_and_morty/features/episode/presentation/bloc/episode_bloc.dart';
 import 'package:rick_and_morty/features/home/presentation/widgets/location_card.dart';
 import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
+import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
+import '../../domain/entities/episode.dart';
 
-class EpisodePage extends StatelessWidget {
+class EpisodePage extends StatefulWidget {
   const EpisodePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BackgroundContainer(
-      chid: SingleChildScrollView(
-        child: Column(
-          children: [
-            CustomeAppBar(),
+  State<EpisodePage> createState() => _EpisodePageState();
+}
 
-            Padding(
+class _EpisodePageState extends State<EpisodePage> {
+  final scrollController = ScrollController();
+
+  void initState() {
+    super.initState();
+    context.read<EpisodeBloc>().add(EpisodeFetchAll());
+    setupScrollController(context);
+  }
+
+  void setupScrollController(context) {
+    final EpisodeBloc castBloc = BlocProvider.of<EpisodeBloc>(context);
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          if(castBloc.state is EpisodeDisplaySuccess){
+            BlocProvider.of<EpisodeBloc>(context).add(EpisodeFetchAll());
+          }
+        }
+      }
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    // context.read<EpisodeBloc>().add(EpisodeFetchAll());
+    return BackgroundContainer(
+      chid: Column(
+        children: [
+          CustomeAppBar(),
+
+          ///main section
+          Expanded(
+            flex: 1,
+            child: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,40 +134,91 @@ class EpisodePage extends StatelessWidget {
                   ),
 
                   ///main section
-                  SizedBox(height: 24.h),
-                  Text(
-                    'All episodes',
-                    style: TextStyle(
-                      color: Color(0xFF13D9E5),
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Expanded(
+                      flex: 1,
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // SizedBox(height: 24.h),
+                              Text(
+                                'All Episodes',
+                                style: TextStyle(
+                                  color: Color(0xFF13D9E5),
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(height: 16.h),
+                              BlocConsumer<EpisodeBloc, EpisodeState>(
+                                listener: (context, state) {
+                                  if (state is EpisodeFailure) {
+                                    // Logger().e(state.error);
+                                  }
+                                },
+                                builder: (context, state) {
+                                  if (state is EpisodeLoading && state.isFirstFetch!) {
+                                    return const Loader();
+                                  }
+                                  List<Episode>?episodes = [];
+                                  bool isLoading = false;
+                                  if (state is EpisodeLoading) {
+                                    episodes = state.oldEpisode!;
+                                    isLoading = true;
+                                  } else if (state is EpisodeDisplaySuccess) {
+                                    episodes = state.episode!;
+                                  }
+                                  return Expanded(
+                                    child:episodes.isEmpty?Text("There has no data")
+                                        :
+                                    GridView.builder(
+                                      controller: scrollController,
+                                      padding: EdgeInsets.all(0),
+                                      // physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 0.0.w,
+                                          mainAxisSpacing: 24.0.h,
+                                          childAspectRatio: 6/2,
+                                          mainAxisExtent: 45
+                                      ),
+                                      itemCount: episodes.length + (isLoading ? 1 : 0),
+                                      itemBuilder: (context, index) {
+                                        if(index < episodes!.length){
+                                          return LocationCard(episode: episodes[index],isLocation: false,index: index+1,);
+                                        }
+                                        else{
+                                          Timer(Duration(milliseconds: 30), () {
+                                            scrollController
+                                                .jumpTo(scrollController.position.maxScrollExtent);
+                                          });
+                                          return Center(child: CircularProgressIndicator(),);
+                                        }
+                                      },
+                                    ),
+                                  );
+
+
+                                },
+                              )
+                            ],
+                          )
+                      )
                   ),
-                  SizedBox(height: 16.h),
-                  GridView.builder(
-                    padding: EdgeInsets.all(0),
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 28.0.w,
-                      mainAxisSpacing: 24.0.h,
-                        childAspectRatio: 6/8,
-                      mainAxisExtent: 45
-                    ),
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return LocationCard();
-                    },
-                  )
+
+
+
+
                 ],
               ),
             ),
+          ),
 
 
 
-          ],
-        ),
+        ],
       ),
     );
   }

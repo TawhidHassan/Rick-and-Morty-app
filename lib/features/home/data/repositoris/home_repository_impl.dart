@@ -28,7 +28,11 @@ class HomeRepositoryImpl implements HomeRepository {
         return left(Failure("no internet connection!!"));
       }else{
         final characters = await homeRemoteDataSource.getAllCharacters(status,search,page);
-        return right(characters!.results!);
+        if(characters!.results==null){
+          return left(Failure(characters.error!));
+        }else{
+          return right(characters.results!);
+        }
       }
     }on ServerException catch (e){
       return left(Failure(e.message));

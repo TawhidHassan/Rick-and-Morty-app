@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/cast%20details/presentation/bloc/cast_details_bloc.dart';
 import 'package:rick_and_morty/features/cast/presentation/bloc/localCast/local_cast_bloc.dart';
+import 'package:rick_and_morty/features/episode/presentation/bloc/episode_bloc.dart';
 import 'package:rick_and_morty/features/home/presentation/bloc/local/local_bloc.dart';
+import 'package:rick_and_morty/features/location/presentation/bloc/location_bloc.dart';
 
 import 'Dependenci Injection/init_dependencies.dart';
 import 'core/config/theme/app_themes.dart';
@@ -33,6 +35,10 @@ void main() async{
             create: (_) => serviceLocator<LocalBloc>(),
           ),BlocProvider(
             create: (_) => serviceLocator<LocalCastBloc>(),
+          ),BlocProvider(
+            create: (_) => serviceLocator<LocationBloc>(),
+          ),BlocProvider(
+            create: (_) => serviceLocator<EpisodeBloc>(),
           ),
         ],
         child: const MyApp(),

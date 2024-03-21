@@ -20,7 +20,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
   Future<List<CharacterLocal>> loadCharacters(
       {String? status, String? search})async {
     List<CharacterLocal> charatcters = [];
-    Logger().d("status: ${status}  search ${search}");
+    // Logger().d("status: ${status}  search ${search}");
     try{
       await dbHelper!.fetchAllProducts(status??"",search??"").then((value){
         if(value!=null&&value.isNotEmpty){
@@ -29,7 +29,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
           charatcters=[];
         }
       });
-      Logger().w(charatcters.length);
+      // Logger().w(charatcters.length);
       return charatcters;
     }catch (e){
       throw ServerException(e.toString());

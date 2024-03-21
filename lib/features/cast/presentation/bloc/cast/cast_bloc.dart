@@ -39,9 +39,6 @@ class CastBloc extends Bloc<CastEvent, CastState> {
       else{
         oldCharacter=currentState.characters!;
       }
-
-
-
     }
     emit(CastLoading(oldCharacters:  oldCharacter, isFirstFetch: page == 1,));
 
@@ -49,7 +46,15 @@ class CastBloc extends Bloc<CastEvent, CastState> {
     final res = await _getAllCharacters(GetCharacterParams(status:event.status,search: event.search,page: page ));
 
     res.fold(
-          (l) => emit(CastFailure(l.message)),
+          (l) {
+            if(l.message=="There is nothing here"){
+              final characters= (state as CastLoading).oldCharacters;
+              emit(CastDisplaySuccess(characters: characters, status: event.status,search:event.search ));
+            }else{
+              emit(CastFailure(l.message));
+            }
+
+          },
           (r){
         page++;
         if(state is CastLoading){

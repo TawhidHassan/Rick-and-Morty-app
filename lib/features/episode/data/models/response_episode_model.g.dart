@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'response_character_model.dart';
+part of 'response_episode_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CharacterResponseModel _$CharacterResponseModelFromJson(
+EpisodeResponseModel _$EpisodeResponseModelFromJson(
         Map<String, dynamic> json) =>
-    CharacterResponseModel(
+    EpisodeResponseModel(
       results: (json['results'] as List<dynamic>?)
-          ?.map((e) => CharacterModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => EpisodeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       error: json['error'] as String?,
     );
 
-Map<String, dynamic> _$CharacterResponseModelToJson(
-        CharacterResponseModel instance) =>
+Map<String, dynamic> _$EpisodeResponseModelToJson(
+        EpisodeResponseModel instance) =>
     <String, dynamic>{
       'results': instance.results,
       'error': instance.error,

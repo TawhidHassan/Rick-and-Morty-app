@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:rick_and_morty/core/common/widgets/Button/custom_button.dart';
+import 'package:rick_and_morty/features/episode/presentation/bloc/episode_bloc.dart';
 import 'package:rick_and_morty/features/home/presentation/bloc/local/local_bloc.dart';
+import 'package:rick_and_morty/features/location/presentation/bloc/location_bloc.dart';
 
 import '../../../../core/common/widgets/Background/background.dart';
 import '../../../../core/common/widgets/appBar/customeAppBar.dart';
@@ -12,7 +14,6 @@ import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/config/color/custom_color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/custom_assets/assets.gen.dart';
-import '../../../../core/local_storage/database_manager.dart';
 import '../../../../core/routes/route_path.dart';
 import '../bloc/home/home_bloc.dart';
 import '../widgets/character_card.dart';
@@ -32,7 +33,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     context.read<HomeBloc>().add(CharacetersFetchAll());
     context.read<LocalBloc>().add(CharacetersFetchHome());
-
+    context.read<LocationBloc>().add(LocationFetchAll());
+    context.read<EpisodeBloc>().add(EpisodeFetchAll());
   }
   @override
   Widget build(BuildContext context) {
@@ -200,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                         textSize: 13.sp,
                         title: "View all",
                         onTap: () {
-
+                          context.goNamed(Routes.LocationPage);
                         },
                       )
                     ],
@@ -209,15 +211,31 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: 1.0.sw,
                     height: 46.h,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        LocationCard(),
-                        LocationCard(),
-                        LocationCard(),
+                    child: BlocConsumer<LocationBloc, LocationState>(
+                      listener: (context, state) {
+                        // TODO: implement listener
+                      },
+                      builder: (context, state) {
+                        if(state is LocationLoading){
+                          return Loader();
+                        }
+                        if(state is LocationFailure){
+                          return Text(state.error);
+                        }
+                        if(state is LocationDisplaySuccess){
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 5,
+                            itemBuilder: (BuildContext context, int index) {
+                              return LocationCard(index: index+1,location: state.locations![index],);
+                            },
 
-                      ],
-                    ),
+                          );
+                        }
+                        return Text("Some things wrong");
+
+                    },
+                  ),
                   )
                 ],
               ),
@@ -249,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                         textSize: 13.sp,
                         title: "View all",
                         onTap: () {
-
+                          context.goNamed(Routes.EpisodePage);
                         },
                       )
                     ],
@@ -258,14 +276,30 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: 1.0.sw,
                     height: 46.h,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        LocationCard(),
-                        LocationCard(),
-                        LocationCard(),
+                    child: BlocConsumer<EpisodeBloc, EpisodeState>(
+                      listener: (context, state) {
+                        // TODO: implement listener
+                      },
+                      builder: (context, state) {
+                        if(state is EpisodeLoading){
+                          return Loader();
+                        }
+                        if(state is EpisodeFailure){
+                          return Text(state.error);
+                        }
+                        if(state is EpisodeDisplaySuccess){
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 5,
+                            itemBuilder: (BuildContext context, int index) {
+                              return LocationCard(index: index+1,isLocation: false,episode: state.episode![index],);
+                            },
 
-                      ],
+                          );
+                        }
+                        return Text("Some things wrong");
+
+                      },
                     ),
                   )
                 ],

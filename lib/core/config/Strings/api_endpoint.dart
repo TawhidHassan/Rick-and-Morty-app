@@ -14,6 +14,9 @@ class ApiEndpoint {
   static  String GET_ALL_CHARACTERS = 'character'.addBaseURl();
   static  String GET_CHARACTER_DETAILS = 'character'.addBaseURl();
 
+  static  String GET_ALL_LOCATION = 'location'.addBaseURl();
+
+  static  String GET_ALL_EPISODE = 'episode'.addBaseURl();
 //! auth
   static String categoryUrl = 'app-home-notices'.addBaseURl();
 

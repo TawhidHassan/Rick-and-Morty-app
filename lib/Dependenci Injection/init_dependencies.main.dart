@@ -4,6 +4,8 @@ final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
   _initHome();
+  _initLocation();
+  _initEpisode();
 
 
   serviceLocator.registerFactory(() => InternetConnection());
@@ -70,7 +72,7 @@ void _initHome() {
         serviceLocator(),
       ),
     )
-  // Bloc
+  /// Bloc
     ..registerLazySingleton(
           () => HomeBloc(
             getAllCharacters: serviceLocator(),
@@ -101,4 +103,56 @@ void _initHome() {
 
 }
 
+void _initLocation(){
+  /// Datasource
+  serviceLocator
+    ..registerFactory<LocationRemoteDataSource>(
+          () => LocationRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )/// Repository
+    ..registerFactory<LocationRepository>(
+          () => LocationRepositoryImpl(
+        serviceLocator(),
+        serviceLocator()
+      ),
+    )/// Usecases
+    ..registerFactory(
+          () => GetAllLocation(
+        serviceLocator(),
+      ),
+    )/// Bloc
+    ..registerLazySingleton(
+          () => LocationBloc(
+            getAllLocation: serviceLocator(),
+      ),
+    ) ;
+}
+
+
+void _initEpisode(){
+  /// Datasource
+  serviceLocator
+    ..registerFactory<EpisodeRemoteDataSource>(
+          () => EpisodeRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )/// Repository
+    ..registerFactory<EpisodeRepository>(
+          () => EpisodeRepositoryImpl(
+          serviceLocator(),
+          serviceLocator()
+      ),
+    )/// Usecases
+    ..registerFactory(
+          () => GetAllEpisode(
+        serviceLocator(),
+      ),
+    )/// Bloc
+    ..registerLazySingleton(
+          () => EpisodeBloc(
+         getAllEpisode:  serviceLocator(),
+      ),
+    ) ;
+}
 

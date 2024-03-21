@@ -9,9 +9,10 @@ part 'response_character_model.g.dart';
 class CharacterResponseModel {
 
   List<CharacterModel>? results;
-
+  String?error;
   CharacterResponseModel({
     this.results,
+    this.error,
   });
 
 

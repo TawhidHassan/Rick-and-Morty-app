@@ -15,7 +15,7 @@ class GetAllLocalCharacters implements UseCase<List<CharacterLocal>, GetCharacte
 
   @override
   Future<Either<Failure, List<CharacterLocal>>> call(GetCharacterParams params) async {
-    Logger().i(params.status);
+    // Logger().i(params.status);
     return await homeRepository.getLocalAllcharacters(params.status,params.search);
   }
 }
