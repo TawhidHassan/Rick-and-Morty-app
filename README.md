@@ -9,8 +9,11 @@ This project is a starting point for a Flutter application.
 Technology used:
 1. Flutter
 2. Dart
+
 State management:
 1. Bloc
+
+
 Design Pattern
 1. Clean architecture
 
