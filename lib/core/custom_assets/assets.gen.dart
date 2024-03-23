@@ -55,6 +55,10 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/UnFavourite.svg
+  SvgGenImage get unFavourite =>
+      const SvgGenImage('assets/icons/UnFavourite.svg');
+
   /// File path: assets/icons/android.svg
   SvgGenImage get android => const SvgGenImage('assets/icons/android.svg');
 
@@ -72,6 +76,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/episode.svg
   SvgGenImage get episode => const SvgGenImage('assets/icons/episode.svg');
+
+  /// File path: assets/icons/favourite.svg
+  SvgGenImage get favourite => const SvgGenImage('assets/icons/favourite.svg');
 
   /// File path: assets/icons/gender.svg
   SvgGenImage get gender => const SvgGenImage('assets/icons/gender.svg');
@@ -99,12 +106,14 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<dynamic> get values => [
+        unFavourite,
         android,
         camera,
         cast,
         dwon,
         earth,
         episode,
+        favourite,
         gender,
         heart,
         home,

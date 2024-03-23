@@ -43,7 +43,12 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
                       .map((e) =>
                       PopupMenuItem(
                         onTap: () {
-                          context.read<LocalCastBloc>().add(LocalCastFetch(status: e,search: ''));
+                          if(e=="all"){
+                            context.read<LocalCastBloc>().add(LocalCastFetch(status: '',search: ''));
+                          }else{
+                            context.read<LocalCastBloc>().add(LocalCastFetch(status: e,search: ''));
+
+                          }
                         },
                         child: Text('$e', style: TextStyle(
                             color: Colors.white,
@@ -124,7 +129,6 @@ class CustomeFavouriteSearchBar extends StatelessWidget {
                       child: TextField(
                         onSubmitted: (value){
                           context.read<LocalCastBloc>().add(LocalCastFetch(status: '',search: value));
-
                           FocusScope.of(context).unfocus();
 
                         },

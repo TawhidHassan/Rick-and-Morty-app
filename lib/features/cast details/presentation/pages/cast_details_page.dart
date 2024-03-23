@@ -104,35 +104,35 @@ class CastDetailsPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: 16.h,),
-                        BlocBuilder<LocalBloc, LocalState>(
-                        builder: (context, state) {
-                          if(state is HomeLocalCharactersDisplaySuccess){
-                            if(state.characters!.where((element) => element.id==id!).toList().isNotEmpty){
-                              return InkWell(
-                                  onTap: (){
-                                    context.read<LocalBloc>().add(RemoveCharacter(id: id));
-                                    context.read<LocalBloc>().add(CharacetersFetchHome());
-                                    context.read<LocalCastBloc>().add(LocalCastFetch());
-                                  },
-                                  child: Icon(Icons.favorite,color: CustomColor.kPrimaryColorx,));
-                            }
-                            return  InkWell(
-                                onTap: (){
-                                  final CastDetailsBloc castDetailsBloc = BlocProvider.of<CastDetailsBloc>(context);
-                                  if(castDetailsBloc.state is CastDetailsDisplaySuccess){
-                                    final currentState = castDetailsBloc.state as CastDetailsDisplaySuccess;
-                                    context.read<LocalBloc>().add(SaveCharacter(character: currentState.character!));
-                                    context.read<LocalBloc>().add(CharacetersFetchHome());
-                                    context.read<LocalCastBloc>().add(LocalCastFetch());
-                                  }
-                                },
-                                child: Icon(Icons.favorite_outline));
-                          }
-                          return Icon(Icons.favorite_outline);
-
-                        },
-                                                  ),
+                        // SizedBox(height: 16.h,),
+                        // BlocBuilder<LocalBloc, LocalState>(
+                        // builder: (context, state) {
+                        //   if(state is HomeLocalCharactersDisplaySuccess){
+                        //     if(state.characters!.where((element) => element.id==id!).toList().isNotEmpty){
+                        //       return InkWell(
+                        //           onTap: (){
+                        //             context.read<LocalBloc>().add(RemoveCharacter(id: id));
+                        //             context.read<LocalBloc>().add(CharacetersFetchHome());
+                        //             context.read<LocalCastBloc>().add(LocalCastFetch());
+                        //           },
+                        //           child: Icon(Icons.favorite,color: CustomColor.kPrimaryColorx,));
+                        //     }
+                        //     return  InkWell(
+                        //         onTap: (){
+                        //           final CastDetailsBloc castDetailsBloc = BlocProvider.of<CastDetailsBloc>(context);
+                        //           if(castDetailsBloc.state is CastDetailsDisplaySuccess){
+                        //             final currentState = castDetailsBloc.state as CastDetailsDisplaySuccess;
+                        //             context.read<LocalBloc>().add(SaveCharacter(character: currentState.character!));
+                        //             context.read<LocalBloc>().add(CharacetersFetchHome());
+                        //             context.read<LocalCastBloc>().add(LocalCastFetch());
+                        //           }
+                        //         },
+                        //         child: Icon(Icons.favorite_outline));
+                        //   }
+                        //   return Icon(Icons.favorite_outline);
+                        //
+                        // },
+                        //                           ),
                         SizedBox(height: 16.h,),
 
                         Row(

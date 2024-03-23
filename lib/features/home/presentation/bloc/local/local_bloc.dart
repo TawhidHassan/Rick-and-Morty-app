@@ -62,7 +62,7 @@ class LocalBloc extends Bloc<LocalEvent, LocalState> {
       Emitter<LocalState> emit) async{
     ///data call
     final res = await _removeLoacalCharacter(RemoveCharacterParams(id:event.id));
-    print("object");
+    // print("object");
     res.fold(
             (l) => emit(CharactersLocalFailure(l.message)),
             (r)=>emit(CastSaveSuccess(characterLocal: r))

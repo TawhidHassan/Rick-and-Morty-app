@@ -43,7 +43,12 @@ class CustomeSearchBar extends StatelessWidget {
                       PopupMenuItem(
                         onTap: () {
                           if(state is CastDisplaySuccess){
-                            context.read<CastBloc>().add(CastFetchAll(status: e,search: state.search));
+                            if(e=="all"){
+                              context.read<CastBloc>().add(CastFetchAll(status: '',search: state.search));
+                            }else{
+                              context.read<CastBloc>().add(CastFetchAll(status: e,search: state.search));
+
+                            }
                           }
                         },
                         child: Text('$e', style: TextStyle(
